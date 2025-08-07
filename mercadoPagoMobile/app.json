@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "prjMercadoPago",
-    "slug": "prjMercadoPago",
+    "name": "mercadoPagoMobile",
+    "slug": "mercadoPagoMobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

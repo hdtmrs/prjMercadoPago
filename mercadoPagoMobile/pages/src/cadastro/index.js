@@ -1,9 +1,9 @@
-import React, {use, useState} from "react";
-import {View, Text, Pressable, TextInput} from 'react-native';
+import React, {useState} from "react";
+import {View, Text, Pressable, TextInput, Button} from 'react-native';
 import axios from 'axios';
 
-const CadastroScreen = () => {
-    const [carregando, setCarregando] = (false);
+const CadastroScreen = ({navigation}) => {
+    const [carregando, setCarregando] = useState(false);
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
@@ -46,6 +46,7 @@ const CadastroScreen = () => {
         if(!validarDados) return;
 
         setCarregando(true);
+        try{
         const response = await axios.post('http://127.0.0.1:8000/api/cadastrar', {
             nome,
             email,
@@ -53,8 +54,25 @@ const CadastroScreen = () => {
             cpf,
         });
 
-        
-
+        if(response.status === 200) {
+            navigation.navigate('Login');
+        }
+        }catch(err) {
+            if(err.response) {
+                if(err.response.status === 401) {
+                    setErroMessage('Erro, cadastro não autorizado');
+                    return;
+                }else if(err.response.status === 500) {
+                    setErroMessage('Erro, no Servidor');
+                    return;
+                }else{
+                    setErroMessage('Erro, tente novamente mais tarde');
+                    return;
+                }
+            }
+        }finally{
+            setCarregando(false);
+        }
     }
     return(
         <View>
@@ -71,31 +89,53 @@ const CadastroScreen = () => {
                 <Text>
                     Nome
                 </Text>
-                <TextInput />
+                <TextInput 
+                    keyboardType="default"
+                    onChangeText={nome => setNome(nome)}
+                    placeholder="Digite seu nome"
+                />
 
                 <Text>
                     Email
                 </Text>
-                <TextInput />
+                <TextInput 
+                    keyboardType="email-address"
+                    onChangeText={email => setEmail(email)}
+                    placeholder="Digite seu email"
+                />
 
                 <Text>
                     Senha
                 </Text>
-                <TextInput />
+                <TextInput 
+                    keyboardType="default"
+                    onChangeText={senha => setSenha(senha)}
+                    placeholder="Digite sua senha (min:8)"
+                    secureTextEntry
+                />
 
                 <Text>
                     Confirme a senha
                 </Text>
-                <TextInput />
-
+                <TextInput 
+                    keyboardType="default"
+                    onChangeText={senhaConfirma => setSenhaConfirma(senhaConfirma)}
+                    placeholder="Digite sua senha (min:8)"
+                    secureTextEntry
+                />
                 <Text>
                     Cadastro de Pessoa Fisica - CPF
                 </Text>
-                <TextInput />
+                <TextInput 
+                    keyboardType="default"
+                    onChangeText={cpf => setCpf(cpf)}
+                    placeholder="Digite seu cpf"
+                />
 
-                <Button />
+                <Button onPress={() => enviarDados()}/>
             </View>
         </View>
     );
 };
+
 export default CadastroScreen;

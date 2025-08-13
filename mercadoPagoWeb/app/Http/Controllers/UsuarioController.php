@@ -20,4 +20,5 @@ class UsuarioController extends Controller
 
         return response()->json($usuario, 201);
     }
+
 }

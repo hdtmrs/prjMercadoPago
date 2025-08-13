@@ -54,9 +54,8 @@ const CadastroScreen = ({navigation}) => {
             cpf,
         });
 
-        if(response.status === 200) {
             navigation.navigate('Login');
-        }
+
         }catch(err) {
             if(err.response) {
                 if(err.response.status === 401) {
@@ -76,15 +75,16 @@ const CadastroScreen = ({navigation}) => {
     }
     return(
         <View>
-            <Pressable>
+            <View>
+                <Pressable>
+                    <Text>
+                        Back
+                    </Text>
+                </Pressable>
                 <Text>
-                    Back
+                    Cadastrar nova conta
                 </Text>
-            </Pressable>
-            <Text>
-                Cadastrar nova conta
-            </Text>
-
+            </View>
             <View>
                 <Text>
                     Nome
@@ -133,6 +133,9 @@ const CadastroScreen = ({navigation}) => {
                 />
 
                 <Button onPress={() => enviarDados()}/>
+                <Pressable onPress={() => navigation.navigate('Login')}>
+                    <Text>Ja tem um login? Entre aqui</Text>
+                </Pressable>
             </View>
         </View>
     );

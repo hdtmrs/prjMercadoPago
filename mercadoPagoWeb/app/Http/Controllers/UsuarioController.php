@@ -2,23 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Usuario;
 
-class UsuarioController extends Controller
+class UsuarioController
 {
     public function store(Request $request) {
         $dados = $request->validate([
             'nome' => 'required|string|max:100',
-            'email' => 'required|email|max:225',
+            'email' => 'required|email|max:225|unique:tbUsuario,email',
             'senha' => 'required|string|min:8',
             'cpf' => 'required|string|min:11',
         ]);
 
-        $usuario = Usuario::create($dados);
+        $usuario = Usuario::create([
+            'nome' => $dados['nome'],
+            'email' => $dados['email'],
+            'senha' => Hash::make($dados['senha']),
+            'cpf' => $dados['cpf'],
+        ]);
 
         return response()->json($usuario, 201);
     }
-
 }

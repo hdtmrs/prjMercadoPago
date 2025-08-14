@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {View, Text, Pressable, TextInput, Button} from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const LoginScreen = ({navigation}) => {
@@ -35,10 +35,13 @@ const LoginScreen = ({navigation}) => {
         setCarregando(true);
 
         try{
-            const response = await axios.get('http://127.0.0.1:8000', {
+            const response = await axios.post('http://127.0.0.1:8000/api/entrar', {
                 email,
                 senha,
             });
+            
+            const tokenUser = response.data.token;
+            await AsyncStorage.setItem('userToken', tokenUser);
 
             navigation.navigate('Home');
         }catch(erro) {
@@ -79,8 +82,9 @@ const LoginScreen = ({navigation}) => {
                 <TextInput
                     onChangeText={setSenha}
                     value={senha}
-                    placeholder="Digite seu email"
-                    keyboardType='email-address'
+                    placeholder="Digite sua senha"
+                    keyboardType='default'
+                    secureTextEntry={true}
                 />
                 <Text>Esqueci minha senha?</Text>
 

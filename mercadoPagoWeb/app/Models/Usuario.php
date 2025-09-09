@@ -17,6 +17,7 @@ class Usuario extends Authenticatable
         'email',
         'senha',
         'cpf',
+        'dinheiro',
     ];
 
     protected $table = 'tbUsuario';

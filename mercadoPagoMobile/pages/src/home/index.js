@@ -8,7 +8,9 @@ const HomeScreen = ({navigation}) => {
     const [loading, setLoading] = useState(true);
     const [modalSet, setModalSet] = useState(false);
     const [modalGet, setModalGet] = useState(false);
-    const [price, setPrice] = useState(0);
+    const [dinheiro, setDinheiro] = useState(0);
+    const [dinheiroSet, setDinheiroSet] = useState(0);
+    const [dinheiroGet, setDinheiroGet] = useState(0);
 
     useEffect(() => {
         const buscarDados = async () => {
@@ -21,7 +23,7 @@ const HomeScreen = ({navigation}) => {
                 });
                 console.log(response);
                 setNome(response.data.nome);
-
+                setDinheiro(Number(response.data.dinheiro));
             }catch(err) {
                 console.log(err);
             }finally{
@@ -31,6 +33,31 @@ const HomeScreen = ({navigation}) => {
         buscarDados();
     },[]);
 
+    const colocarGrana = () => {
+        setDinheiro(dinheiro + dinheiroSet);
+        setDinheiroSet(0);
+        setModalSet(false);
+    };
+
+    const tirarGrana = () => {
+        setDinheiro(dinheiro - dinheiroGet);
+        setDinheiroGet(0);
+        setModalGet(false);
+    };
+
+    const atualizarGrana = async () => {
+        try{
+            const tokenUser = await AsyncStorage.getItem('userToken');
+            await axios.put('http://127.0.0.1:8000/api/update-money',{dinheiro}, {
+                headers: {
+                    Authorization: `Bearer ${tokenUser}`
+                }
+            })
+        }catch(err) {
+            console.log(err);
+        }
+    }
+
     if(loading) {
         return(
             <View>
@@ -39,9 +66,9 @@ const HomeScreen = ({navigation}) => {
             </View>
         );
     }
+
     return(
         <View>
-            
             <View>
                 <Pressable>
                     <Text>{nome}</Text>
@@ -53,17 +80,15 @@ const HomeScreen = ({navigation}) => {
                     <Text>Ajuda</Text>
                 </Pressable>
             </View>
+
             <View>
-                <Text>Valor total</Text>
+                <Text>{dinheiro}</Text>
                 <Pressable onPress={() => setModalSet(true)}>
                     <Text>Colocar dinheiro</Text>
                 </Pressable>
                 <Pressable onPress={() => setModalGet(true)}>
                     <Text>Tirar dinheiro</Text>
                 </Pressable>
-            </View>
-            <View>
-
             </View>
 
             <Modal visible={modalSet} transparent={false} animationType="slide" onRequestClose={() => setModalSet(false)}>
@@ -72,20 +97,29 @@ const HomeScreen = ({navigation}) => {
                         <Text>Fechar</Text>
                     </Pressable>
                     <Text>Guardar dinheiro</Text>
-                    <TextInput value={price} onChangeText={setPrice} keyboardType="numeric" />
-                    <Pressable>
+                    <TextInput 
+                        value={dinheiroSet.toString()} 
+                        onChangeText={(text) => setDinheiroSet(Number(text))}
+                        keyboardType="numeric" 
+                    />
+                    <Pressable onPress={colocarGrana}>
                         <Text>Enviar</Text>
                     </Pressable>
                 </View>
             </Modal>
+
             <Modal visible={modalGet} transparent={false} animationType="slide" onRequestClose={() => setModalGet(false)}>
                 <View>
                     <Pressable onPress={() => setModalGet(false)}>
                         <Text>Fechar</Text>
                     </Pressable>
                     <Text>Retirar dinheiro</Text>
-                    <TextInput value={price} onChangeText={setPrice} keyboardType="numeric" />
-                    <Pressable>
+                    <TextInput 
+                        value={dinheiroGet.toString()} 
+                        onChangeText={(text) => setDinheiroGet(Number(text))}
+                        keyboardType="numeric" 
+                    />
+                    <Pressable onPress={tirarGrana}>
                         <Text>Enviar</Text>
                     </Pressable>
                 </View>

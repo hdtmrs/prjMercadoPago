@@ -21,6 +21,7 @@ class UsuarioController
             'email' => $dados['email'],
             'senha' => Hash::make($dados['senha']),
             'cpf' => $dados['cpf'],
+            'dinheiro' => '0',
         ]);
 
         return response()->json($usuario, 201);
@@ -30,5 +31,15 @@ class UsuarioController
         $usuario = $request->user();
 
         return response()->json($usuario);
+    }
+
+    public function put(Request $request) {
+        $usuario = $request->user();
+
+        if($usuario->dinheiro){
+            $usuario->dinheiro = $request->dinheiro;
+        }
+
+        $usuario->save();
     }
 }

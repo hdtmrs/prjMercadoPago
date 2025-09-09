@@ -11,4 +11,5 @@ Route::post('/entrar',[AuthController::class, 'index']);
 
 Route::middleware('auth:api')->controller(UsuarioController::class)->group(function () {
     Route::get('/getdate','index');
+    Route::put('/update-money','put');
 });

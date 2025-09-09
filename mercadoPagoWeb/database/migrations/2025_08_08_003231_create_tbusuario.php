@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('senha');
             $table->string('cpf');
+            $table->string('dinheiro');
             $table->timestamps();
         });
     }

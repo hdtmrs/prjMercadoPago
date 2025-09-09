@@ -9,6 +9,6 @@ Route::post('/cadastrar',[UsuarioController::class, 'store']);
 Route::post('/entrar',[AuthController::class, 'index']);
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->controller(UsuarioController::class)->group(function () {
+    Route::get('/getdate','index');
 });

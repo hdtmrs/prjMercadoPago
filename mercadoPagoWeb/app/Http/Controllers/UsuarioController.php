@@ -25,4 +25,10 @@ class UsuarioController
 
         return response()->json($usuario, 201);
     }
+
+    public function index(Request $request) {
+        $usuario = $request->user();
+
+        return response()->json($usuario);
+    }
 }

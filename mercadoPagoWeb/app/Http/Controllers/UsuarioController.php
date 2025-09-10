@@ -36,10 +36,9 @@ class UsuarioController
     public function put(Request $request) {
         $usuario = $request->user();
 
-        if($usuario->dinheiro){
-            $usuario->dinheiro = $request->dinheiro;
-        }
-
+        $usuario->dinheiro = $request->valor;
         $usuario->save();
+
+        return response()->json(['mensagem' => 'Grana atualizada', $usuario->dinheiro], 200);
     }
 }

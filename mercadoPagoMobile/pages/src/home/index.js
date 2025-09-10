@@ -13,6 +13,7 @@ const HomeScreen = ({navigation}) => {
     const [dinheiroGet, setDinheiroGet] = useState(0);
 
     useEffect(() => {
+        
         const buscarDados = async () => {
             try{
                 const tokenUser = await AsyncStorage.getItem('userToken');
@@ -34,21 +35,25 @@ const HomeScreen = ({navigation}) => {
     },[]);
 
     const colocarGrana = () => {
-        setDinheiro(dinheiro + dinheiroSet);
+        const valor = (dinheiro + dinheiroSet);
+        setDinheiro(valor);
         setDinheiroSet(0);
         setModalSet(false);
+        atualizarGrana(valor);
     };
 
     const tirarGrana = () => {
-        setDinheiro(dinheiro - dinheiroGet);
+        const valor = (dinheiro - dinheiroGet);
+        setDinheiro(valor);
         setDinheiroGet(0);
         setModalGet(false);
+        atualizarGrana(valor);
     };
 
-    const atualizarGrana = async () => {
+    const atualizarGrana = async (valor) => {
         try{
             const tokenUser = await AsyncStorage.getItem('userToken');
-            await axios.put('http://127.0.0.1:8000/api/update-money',{dinheiro}, {
+            await axios.put('http://127.0.0.1:8000/api/update-money',{valor}, {
                 headers: {
                     Authorization: `Bearer ${tokenUser}`
                 }

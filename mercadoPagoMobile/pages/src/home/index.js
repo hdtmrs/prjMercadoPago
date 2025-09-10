@@ -58,6 +58,11 @@ const HomeScreen = ({navigation}) => {
         buscarHistorico();
     },[]);
 
+    const exit = async () => {
+        await AsyncStorage.removeItem('userToken');
+        navigation.navigate('Login');
+    }
+
     const colocarGrana = () => {
         const tipo = 'entrada';
         const valorEntregue = dinheiroSet;
@@ -132,7 +137,7 @@ const HomeScreen = ({navigation}) => {
                 <Pressable>
                     <Text>Notificação</Text>
                 </Pressable>
-                <Pressable>
+                <Pressable onPress={exit}>
                     <Text>Ajuda</Text>
                 </Pressable>
             </View>

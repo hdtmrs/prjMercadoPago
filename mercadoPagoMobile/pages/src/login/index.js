@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -10,6 +10,15 @@ const LoginScreen = ({ navigation }) => {
   const [carregando, setCarregando] = useState(false);
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+  useEffect(() => {
+    const entrar = async () => {
+      const tokenUser = await AsyncStorage.getItem('userToken');
+      if(tokenUser) {
+        navigation.navigate('Home');
+      }
+    }
+    entrar();
+  },[]);
   const validarDados = () => {
     if (!senha || !email) {
       setErroMessage('Digite os campos obrigatórios');

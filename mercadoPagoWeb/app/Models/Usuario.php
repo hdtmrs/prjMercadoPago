@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Modals\Historico;
 
 
 class Usuario extends Authenticatable
@@ -35,5 +36,7 @@ class Usuario extends Authenticatable
         'cpf' => 'string',
     ];
 
-
+    public function historicos() {
+        return $this->hasMany(Historico::class, 'idUsuario');
+    }
 }

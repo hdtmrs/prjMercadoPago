@@ -11,6 +11,8 @@ const HomeScreen = ({navigation}) => {
     const [dinheiro, setDinheiro] = useState(0);
     const [dinheiroSet, setDinheiroSet] = useState(0);
     const [dinheiroGet, setDinheiroGet] = useState(0);
+    const [valorEntregue, setValorEntregue] = useState(0);
+    const [motivo, setMotivo] = useState('');
 
     useEffect(() => {
         
@@ -35,20 +37,47 @@ const HomeScreen = ({navigation}) => {
     },[]);
 
     const colocarGrana = () => {
+        const tipo = 'entrada';
+        const valorEntregue = dinheiroSet;
         const valor = (dinheiro + dinheiroSet);
         setDinheiro(valor);
         setDinheiroSet(0);
         setModalSet(false);
+        guardarHistorico(tipo, valorEntregue);
+        setValorEntregue();
         atualizarGrana(valor);
     };
 
     const tirarGrana = () => {
+        const tipo = 'saida';
+        const valorEntregue = dinheiroGet;
         const valor = (dinheiro - dinheiroGet);
         setDinheiro(valor);
         setDinheiroGet(0);
         setModalGet(false);
+        guardarHistorico(tipo, valorEntregue);
+        setValorEntregue(0);
         atualizarGrana(valor);
     };
+
+    const guardarHistorico = async (tipo, valorEntregue) => {
+        try {
+            const tokenUser = await AsyncStorage.getItem('userToken');
+            const response = await axios.post('http://127.0.0.1:8000/api/post',{
+                valorEntregue,
+                tipo,
+                motivo,
+            },{
+                headers: {
+                    Authorization: `Bearer ${tokenUser}`
+                }
+            });
+
+
+        }catch(err) {
+            console.log(err);
+        }
+    }
 
     const atualizarGrana = async (valor) => {
         try{
@@ -124,6 +153,11 @@ const HomeScreen = ({navigation}) => {
                         onChangeText={(text) => setDinheiroGet(Number(text))}
                         keyboardType="numeric" 
                     />
+                    <TextInput
+                        value={motivo}
+                        onChangeText={setMotivo}
+                        keyboardType="none"
+                    /> 
                     <Pressable onPress={tirarGrana}>
                         <Text>Enviar</Text>
                     </Pressable>

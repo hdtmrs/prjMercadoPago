@@ -26,13 +26,12 @@ class HistoricoController
         ]);
     }
 
-        public function index(Request $request)
-    {
-        $usuario = $request->user();
-        $historico = Historico::where('idUsuario', $usuario->id)
-            ->orderBy('data', 'desc')
-            ->get();
+        public function index(Request $request) {
+            $usuario = $request->user();
+            $historicos = Historico::where('idUsuario', $usuario->id)
+                ->orderBy('data', 'desc')
+                ->get();
 
-        return response()->json($historico);
+            return response()->json($historicos);
     }
 }

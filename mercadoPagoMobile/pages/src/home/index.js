@@ -11,13 +11,14 @@ const HomeScreen = ({navigation}) => {
     const [dinheiro, setDinheiro] = useState(0);
     const [dinheiroSet, setDinheiroSet] = useState(0);
     const [dinheiroGet, setDinheiroGet] = useState(0);
-    const [valorEntregue, setValorEntregue] = useState(0);
     const [motivo, setMotivo] = useState('');
+    const [historicos, setHistoricos] = useState([]);
+
 
     useEffect(() => {
-        
         const buscarDados = async () => {
             try{
+                setLoading(true);
                 const tokenUser = await AsyncStorage.getItem('userToken');
                 const response = await axios.get('http://127.0.0.1:8000/api/getdate', {
                     headers: {
@@ -36,6 +37,27 @@ const HomeScreen = ({navigation}) => {
         buscarDados();
     },[]);
 
+    useEffect(() => {
+        const buscarHistorico =  async () => {
+            try {
+                setLoading(true);
+                const tokenUser = await AsyncStorage.getItem('userToken');
+                const response = await axios.get('http://127.0.0.1:8000/api/see',{
+                    headers: {
+                        Authorization: `Bearer ${tokenUser}`
+                    }
+                });
+                setHistoricos(response.data);
+            }catch(err) {
+                console.log(err);
+            }finally{
+                setLoading(false);
+            }
+
+        }
+        buscarHistorico();
+    },[]);
+
     const colocarGrana = () => {
         const tipo = 'entrada';
         const valorEntregue = dinheiroSet;
@@ -43,8 +65,8 @@ const HomeScreen = ({navigation}) => {
         setDinheiro(valor);
         setDinheiroSet(0);
         setModalSet(false);
+        setMotivo('');
         guardarHistorico(tipo, valorEntregue);
-        setValorEntregue();
         atualizarGrana(valor);
     };
 
@@ -55,8 +77,8 @@ const HomeScreen = ({navigation}) => {
         setDinheiro(valor);
         setDinheiroGet(0);
         setModalGet(false);
+        setMotivo('');
         guardarHistorico(tipo, valorEntregue);
-        setValorEntregue(0);
         atualizarGrana(valor);
     };
 
@@ -124,7 +146,14 @@ const HomeScreen = ({navigation}) => {
                     <Text>Tirar dinheiro</Text>
                 </Pressable>
             </View>
-
+            {historicos.map((historico, index) => (
+                <View key={index}>
+                    <Text>Valor: {historico.valor}</Text>
+                    <Text>Tipo: {historico.tipo}</Text>
+                    <Text>Motivo: {historico.motivo}</Text>
+                    <Text>Data: {historico.data}</Text>
+                </View>
+            ))}
             <Modal visible={modalSet} transparent={false} animationType="slide" onRequestClose={() => setModalSet(false)}>
                 <View>
                     <Pressable onPress={() => setModalSet(false)}>
@@ -136,6 +165,12 @@ const HomeScreen = ({navigation}) => {
                         onChangeText={(text) => setDinheiroSet(Number(text))}
                         keyboardType="numeric" 
                     />
+                    <Text>Motivo</Text>
+                    <TextInput
+                        value={motivo}
+                        onChangeText={setMotivo}
+                        keyboardType="none"
+                    /> 
                     <Pressable onPress={colocarGrana}>
                         <Text>Enviar</Text>
                     </Pressable>
@@ -153,6 +188,7 @@ const HomeScreen = ({navigation}) => {
                         onChangeText={(text) => setDinheiroGet(Number(text))}
                         keyboardType="numeric" 
                     />
+                    <Text>Motivo</Text>
                     <TextInput
                         value={motivo}
                         onChangeText={setMotivo}

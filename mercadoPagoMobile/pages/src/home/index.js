@@ -117,7 +117,7 @@ const HomeScreen = ({navigation}) => {
 
     return(
         <View style={styles.container}>
-            {/* Header */}
+            
             <View style={styles.header}>
                 <Text style={styles.headerText}>{nome}</Text>
                 <Pressable><Text style={styles.headerBtn}>Notificação</Text></Pressable>
@@ -125,7 +125,7 @@ const HomeScreen = ({navigation}) => {
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
-                {/* Saldo */}
+                
                 <View style={styles.balanceCard}>
                     <Text style={styles.balanceLabel}>Seu saldo</Text>
                     <Text style={styles.balanceValue}>R$ {dinheiro.toFixed(2)}</Text>
@@ -139,7 +139,7 @@ const HomeScreen = ({navigation}) => {
                     </View>
                 </View>
 
-                {/* Histórico */}
+                
                 <Text style={styles.sectionTitle}>Histórico</Text>
                 {historicos.map((historico, index) => (
                     <View key={index} style={styles.historyCard}>
@@ -151,7 +151,7 @@ const HomeScreen = ({navigation}) => {
                 ))}
             </ScrollView>
 
-            {/* Modal Adicionar */}
+            
             <Modal visible={modalSet} transparent={true} animationType="slide" onRequestClose={() => setModalSet(false)}>
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
@@ -177,7 +177,7 @@ const HomeScreen = ({navigation}) => {
                 </View>
             </Modal>
 
-            {/* Modal Retirar */}
+            
             <Modal visible={modalGet} transparent={true} animationType="slide" onRequestClose={() => setModalGet(false)}>
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
         marginTop: 8, 
         fontSize: 16, 
         color: "#555", 
-        fontWeight: "300", // mais delicado
+        fontWeight: "300",
         letterSpacing: 0.5
     },
 

@@ -66,9 +66,6 @@ const CadastroScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Pressable onPress={() => navigation.goBack()}>
-          <Text style={styles.backText}>←</Text>
-        </Pressable>
         <Text style={styles.title}>Cadastrar nova conta</Text>
       </View>
 

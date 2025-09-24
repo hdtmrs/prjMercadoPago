@@ -119,7 +119,9 @@ const HomeScreen = ({navigation}) => {
         <View style={styles.container}>
             
             <View style={styles.header}>
-                <Text style={styles.headerText}>{nome}</Text>
+                <Pressable onPress={() => navigation.navigate('Perfil')}>
+                    <Text style={styles.headerText}>Perfil</Text>
+                </Pressable>
                 <Pressable><Text style={styles.headerBtn}>Notificação</Text></Pressable>
                 <Pressable onPress={exit}><Text style={styles.headerBtn}>Sair</Text></Pressable>
             </View>

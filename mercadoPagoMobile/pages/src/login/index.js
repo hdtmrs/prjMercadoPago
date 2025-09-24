@@ -68,7 +68,6 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Cabeçalho */}
       <View style={styles.header}>
         <Pressable onPress={() => navigation.goBack()}>
           <Text style={styles.backText}>←</Text>
@@ -76,7 +75,6 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.title}>Login</Text>
       </View>
 
-      {/* Inputs */}
       <View style={styles.form}>
         <Text style={styles.label}>Email</Text>
         <TextInput
@@ -123,7 +121,15 @@ const styles = StyleSheet.create({
   backText: { fontSize: 22, marginRight: 10, color: "#009EE3" },
   title: { fontSize: 26, fontWeight: "bold", color: "#009EE3" },
 
-  form: { width: "100%" },
+  form: { width: "100%",backgroundColor: "#fff", 
+        padding: 16, 
+        borderRadius: 12, 
+        marginBottom: 14, 
+        elevation: 4, 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 3 }, 
+        shadowOpacity: 0.15, 
+        shadowRadius: 4  },
   card: { backgroundColor: "#fff", borderRadius: 12, padding: 20, elevation: 5, shadowColor: "#000", shadowOpacity: 0.15, shadowOffset: { width: 0, height: 3 }, shadowRadius: 6 },
 
   label: { fontSize: 14, color: "#333", marginTop: 15 },

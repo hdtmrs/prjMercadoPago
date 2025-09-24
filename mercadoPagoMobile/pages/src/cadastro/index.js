@@ -137,31 +137,90 @@ const CadastroScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#ffe600ff", padding: 20, justifyContent: "center" },
-  header: { flexDirection: "row", alignItems: "center", marginBottom: 30 },
-  backText: { fontSize: 22, marginRight: 10, color: "#009EE3" },
-  title: { fontSize: 22, fontWeight: "bold", color: "#009EE3" },
-
-  form: { width: "100%",backgroundColor: "#fff", 
-        padding: 16, 
-        borderRadius: 12, 
-        marginBottom: 14, 
-        elevation: 4, 
-        shadowColor: "#000", 
-        shadowOffset: { width: 0, height: 3 }, 
-        shadowOpacity: 0.15, 
-        shadowRadius: 4  },
-  card: { backgroundColor: "#fff", borderRadius: 12, padding: 20, elevation: 5, shadowColor: "#000", shadowOpacity: 0.15, shadowOffset: { width: 0, height: 3 }, shadowRadius: 6 },
-
-  label: { fontSize: 14, color: "#333", marginTop: 15 },
-  input: { backgroundColor: "#F5F5F5", padding: 15, borderRadius: 10, borderWidth: 1, borderColor: '#000', fontSize: 16, color: "#333", marginBottom: 10 },
-
-  error: { color: "red", marginTop: 10, fontSize: 14 },
-  button: { backgroundColor: "#009EE3", padding: 15, borderRadius: 10, alignItems: "center", marginTop: 20 },
-  buttonText: { color: "#fff", fontSize: 18, fontWeight: "600" },
-
-  registerText: { marginTop: 25, fontSize: 14, textAlign: "center", color: "#555" },
-  link: { color: "#009EE3", fontWeight: "bold" }
+  container: {
+      flex: 1,
+      backgroundColor: "#ffe600ff",
+      padding: 20,
+      justifyContent: "center"
+  },
+  header: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 30
+  },
+  backText: { 
+      fontSize: 22,
+      marginRight: 10,
+      color: "#009EE3"
+  },
+  title: {
+      fontSize: 22,
+      fontWeight: "bold",
+      color: "#009EE3"
+  },
+  form: { 
+      width: "100%",
+      backgroundColor: "#fff", 
+      padding: 16, 
+      borderRadius: 12, 
+      marginBottom: 14, 
+      elevation: 4, 
+      shadowColor: "#000", 
+      shadowOffset: { width: 0, height: 3 }, 
+      shadowOpacity: 0.15, 
+      shadowRadius: 4  },
+  card: {
+      backgroundColor: "#fff",
+      borderRadius: 12,
+      padding: 20,
+      elevation: 5,
+      shadowColor: "#000",
+      shadowOpacity: 0.15,
+      shadowOffset: { width: 0, height: 3 },
+      shadowRadius: 6
+  },
+  label: { 
+      fontSize: 14,
+      color: "#333",
+      marginTop: 15
+  },
+  input: {
+      backgroundColor: "#F5F5F5",
+      padding: 15,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: '#000',
+      fontSize: 16,
+      color: "#333",
+      marginBottom: 10
+  },
+  error: {
+      color: "red",
+      marginTop: 10,
+      fontSize: 14
+  },
+  button: {
+      backgroundColor: "#009EE3",
+      padding: 15,
+      borderRadius: 10,
+      alignItems: "center",
+      marginTop: 20
+  },
+  buttonText: {
+      color: "#fff",
+      fontSize: 18,
+      fontWeight: "600"
+  },
+  registerText: {
+      marginTop: 25,
+      fontSize: 14,
+      textAlign: "center",
+      color: "#555"
+  },
+  link: {
+      color: "#009EE3",
+      fontWeight: "bold"
+  }
 });
 
 

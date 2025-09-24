@@ -1,7 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, Image } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from 'axios';
 
 const PerfilScreen = ({ navigation }) => {
+    const [nome,setNome] = useState('');
+    const [email,setEmail] = useState('');
+
+    useEffect(() => {
+        const buscarDados = async () => {
+            const tokenUser = await AsyncStorage.getItem('userToken');
+            const response = await axios.get('http://127.0.0.1:8000/api/getdate',{
+                headers: {
+                    Authorization: `Bearer ${tokenUser}`
+                }
+            });
+            setNome(response.data?.nome);
+            setEmail(response.data?.email);
+        }
+        buscarDados();
+    },[]);
     return(
         <View>
             <View>
@@ -14,6 +32,8 @@ const PerfilScreen = ({ navigation }) => {
             </View>
             <View>
                 <Image source={require('../../../assets/avatar-placeholder.png')} />
+                <Text>{nome}</Text>
+                <Text>{email}</Text>
             </View>
         </View>
     );

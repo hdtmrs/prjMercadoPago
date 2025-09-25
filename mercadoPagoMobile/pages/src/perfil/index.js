@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, Image } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 
 const PerfilScreen = ({ navigation }) => {
@@ -20,10 +21,53 @@ const PerfilScreen = ({ navigation }) => {
         }
         buscarDados();
     },[]);
+
+    const solicitarPermissao = async () => {
+        const camera = await ImagePicker.requestCameraPermissionsAsync();
+        const galeria = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+        if (camera.status !== 'granted' || galeria.status !== 'granted') {
+            Alert.alert('Permissão negada', 'É necessário permitir acesso à câmera e galeria');
+            return false;
+        }
+
+        return true;
+    }
+
+    const tirarFoto = async () => {
+        const permissoes = await solicitarPermissao();
+        if(!permissoes) return;
+        const resultado = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
+        });
+
+        if(!resultado.canceled) {
+            setImagem(resultado.assets[0].uri);
+        }
+
+
+    }
+
+    const escolherGaleria = async () => {
+        const permissoes = await solicitarPermissao();
+        if(!permissoes) return;
+        const resultado = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
+        });
+
+        if(!resultado.canceled) {
+            setImagem(resultado.assets[0].uri);
+        }
+    }
     return(
+
         <View>
             <View>
-                <Pressable onPress={() => navigation.goback()}>
+                <Pressable onPress={() => navigation.goBack()}>
                     <Text>Voltar</Text>
                 </Pressable>
                 <Text>
@@ -32,6 +76,9 @@ const PerfilScreen = ({ navigation }) => {
             </View>
             <View>
                 <Image source={require('../../../assets/avatar-placeholder.png')} />
+                <Pressable onPress={() => tirarFoto()}>
+                    <Text>Editar</Text>
+                </Pressable>
                 <Text>{nome}</Text>
                 <Text>{email}</Text>
             </View>

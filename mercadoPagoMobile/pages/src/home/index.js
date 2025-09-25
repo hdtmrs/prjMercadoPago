@@ -13,6 +13,7 @@ const HomeScreen = ({navigation}) => {
     const [dinheiroGet, setDinheiroGet] = useState(0);
     const [motivo, setMotivo] = useState('');
     const [historicos, setHistoricos] = useState([]);
+    const [abc,setAbc] = useState(true);
 
     useEffect(() => {
         const buscarDados = async () => {
@@ -49,7 +50,7 @@ const HomeScreen = ({navigation}) => {
             }
         }
         buscarHistorico();
-    },[]);
+    },[abc]);
 
     const exit = async () => {
         await AsyncStorage.removeItem('userToken');
@@ -66,6 +67,7 @@ const HomeScreen = ({navigation}) => {
         setMotivo('');
         guardarHistorico(tipo, valorEntregue);
         atualizarGrana(valor);
+        setAbc(false);
     };
 
     const tirarGrana = () => {
@@ -78,6 +80,7 @@ const HomeScreen = ({navigation}) => {
         setMotivo('');
         guardarHistorico(tipo, valorEntregue);
         atualizarGrana(valor);
+        setAbc(false);
     };
 
     const guardarHistorico = async (tipo, valorEntregue) => {

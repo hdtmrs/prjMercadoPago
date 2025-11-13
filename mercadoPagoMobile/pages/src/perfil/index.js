@@ -75,7 +75,6 @@ const PerfilScreen = ({ navigation }) => {
                 </Text>
             </View>
             <View>
-                <Image source={require('../../../assets/avatar-placeholder.png')} />
                 <Pressable onPress={() => tirarFoto()}>
                     <Text>Editar</Text>
                 </Pressable>
